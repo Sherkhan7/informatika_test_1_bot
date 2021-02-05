@@ -1,0 +1,1 @@
+# informatika_test_1_bot
