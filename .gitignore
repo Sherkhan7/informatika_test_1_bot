@@ -1,0 +1,7 @@
+.idea/
+__pycache__/
+config/
+certificates/
+*.json
+my_pickle_conversations
+my_pickle_user_data
