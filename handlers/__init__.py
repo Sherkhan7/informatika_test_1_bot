@@ -1,4 +1,2 @@
-from .callbackqueryhandler import callback_query_handler
-from .messagehandler import message_handler
-from .certificateconversation import sertificate_conversation_handler
+from .certificateconversation import certificate_conversation_handler
 from .commandhandler import command_handler
