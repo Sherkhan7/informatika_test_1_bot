@@ -2,6 +2,7 @@
 __pycache__/
 config/
 certificates/
+*.png
 *.json
 my_pickle_conversations
 my_pickle_user_data
