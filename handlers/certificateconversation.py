@@ -82,8 +82,7 @@ def fullname_callback(update: Update, context: CallbackContext):
     caption = f"{medal} {place} - o'rin: {fullname}"
 
     inline_keyboard = InlineKeyboard(confirm_keyboard, 'uz').get_keyboard()
-    message = update.message.reply_photo('https://cardel.ml/images/5+1_action.jpg', caption,
-                                         reply_markup=inline_keyboard)
+    message = update.message.reply_photo(certificate['cert_url'], caption, reply_markup=inline_keyboard)
 
     if 'certs' not in user_data:
         user_data['certs'] = {place: certificate}
@@ -94,7 +93,7 @@ def fullname_callback(update: Update, context: CallbackContext):
     user_data['fullname'] = fullname
     user_data['message_id'] = message.message_id
 
-    logger.info('user_data: %s', user_data)
+    # logger.info('user_data: %s', user_data)
     return state
 
 
@@ -156,7 +155,7 @@ def confirmation_callback(update: Update, context: CallbackContext):
             state = CHOOSE_PLACE
             user_data['message_id'] = message.message_id
 
-    logger.info('user_data: %s', user_data)
+    # logger.info('user_data: %s', user_data)
     return state
 
 
