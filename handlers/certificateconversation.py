@@ -26,7 +26,7 @@ def do_command(update: Update, context: CallbackContext):
 
     if user_id not in ACTIVE_ADMINS:
         text = '😔 Kechirasiz men faqat adminlar uchun xizmat qilaman !\n\n' \
-               'Adminga murojaat qilish uchun @sherzodbek_esanov ga yozing !'
+               'Adminga murojaat qilish uchun @Baxa0715 ga yozing !'
         update.message.reply_text(text)
 
         state = ConversationHandler.END
