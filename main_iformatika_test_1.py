@@ -1,6 +1,6 @@
 from telegram.ext import Updater, PicklePersistence
 from config import TOKEN
-
+from errorhandler import error_handler
 from handlers import certificate_conversation_handler, command_handler
 
 
@@ -12,6 +12,8 @@ def main():
     updater.dispatcher.add_handler(certificate_conversation_handler)
 
     updater.dispatcher.add_handler(command_handler)
+
+    updater.dispatcher.add_error_handler(error_handler)
 
     # updater.start_polling()
     # updater.idle()
