@@ -1,11 +1,11 @@
-from telegram import Update, ParseMode
+from telegram import Update, InputFile
 from telegram.ext import CallbackContext
-from config import DEVELOPER_CHAT_ID
+from config import DEVELOPER_CHAT_ID, BOT_USERNAME
 
 import logging
 import traceback
-import html
 import json
+import datetime
 
 # Setting up logging basic config for standart output
 logging.basicConfig(level=logging.INFO, format='%(asctime)s | %(name)s | %(levelname)s | %(message)s')
@@ -24,21 +24,30 @@ def error_handler(update: Update, context: CallbackContext):
     tb_list = traceback.format_exception(None, context.error, context.error.__traceback__)
     tb_string = ''.join(tb_list)
 
-    # Build the message with some markup and additional information about what happened.
-    # You might need to add some logic to deal with messages longer than the 4096 character limit.
     message = (
         f'An exception was raised while handling an update:\n'
         f'{"".ljust(45, "*")}\n'
-        f'<pre>update = {html.escape(json.dumps(update.to_dict(), indent=3, ensure_ascii=False))}'
-        f'</pre>\n'
+        f'update = {json.dumps(update.to_dict(), indent=4, ensure_ascii=False)}'
+        f'\n'
         f'{"".ljust(45, "*")}\n'
         # f'<pre>context.chat_data = {html.escape(str(context.chat_data))}</pre>\n'
         # f'{"".ljust(45, "*")}\n'
-        f'<pre>context.user_data = {html.escape(str(context.user_data))}</pre>\n'
+        f'context.user_data = {json.dumps(update.to_dict(), indent=4, ensure_ascii=False)}\n'
         f'{"".ljust(45, "*")}\n'
-        f'<pre>{html.escape(tb_string)}</pre>\n'
+        f'{tb_string}\n'
         f'{"".ljust(45, "*")}\n'
     )
+    path = f'/var/www/html/{BOT_USERNAME}/logs/'
+    document_name = datetime.datetime.now().strftime("%d-%m-%Y_%H-%M-%S") + '.txt'
+    full_path = path + document_name
+    f = open(full_path, 'w')
+    f.write(message)
+    f.close()
 
-    # Finally, send the message
-    context.bot.send_message(chat_id=DEVELOPER_CHAT_ID, text=message, parse_mode=ParseMode.HTML)
+    f = open(full_path, 'r')
+    caption = 'New error 😥'
+    document = InputFile(f)
+    f.close()
+    # Finally, send the document
+    context.bot.send_document(chat_id=DEVELOPER_CHAT_ID, caption=caption, document=document)
+ 
