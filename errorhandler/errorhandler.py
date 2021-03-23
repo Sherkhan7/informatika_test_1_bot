@@ -50,3 +50,4 @@ def error_handler(update: Update, context: CallbackContext):
     f.close()
     # Finally, send the document
     context.bot.send_document(chat_id=DEVELOPER_CHAT_ID, caption=caption, document=document)
+ 
