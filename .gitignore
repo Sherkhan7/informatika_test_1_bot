@@ -1,7 +1,9 @@
 .idea/
 __pycache__/
-config/
+env/
+venv/
 certificates/
+config.py
 *.png
 *.json
 my_pickle_conversations
