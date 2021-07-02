@@ -1,5 +1,5 @@
 from telegram.ext import Updater, PicklePersistence
-from config import TOKEN
+from config import TOKEN, BASE_URL, PORT
 from errorhandler import error_handler
 from handlers import certificate_conversation_handler, command_handler
 
@@ -18,7 +18,7 @@ def main():
     # updater.start_polling()
     # updater.idle()
 
-    updater.start_webhook(listen='127.0.0.1', port=5008, url_path=TOKEN, webhook_url='https://cardel.ml/' + TOKEN)
+    updater.start_webhook(port=PORT, url_path=TOKEN, webhook_url=BASE_URL + TOKEN)
     updater.idle()
 
 
