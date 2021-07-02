@@ -4,7 +4,7 @@ from config import DEVELOPER_CHAT_ID, BOT_USERNAME
 
 import logging
 import traceback
-import json
+import ujson
 import datetime
 
 # Setting up logging basic config for standart output
@@ -27,12 +27,10 @@ def error_handler(update: Update, context: CallbackContext):
     message = (
         f'An exception was raised while handling an update:\n'
         f'{"".ljust(45, "*")}\n'
-        f'update = {json.dumps(update.to_dict(), indent=4, ensure_ascii=False)}'
+        f'update = {ujson.dumps(update.to_dict(), indent=4, ensure_ascii=False)}'
         f'\n'
         f'{"".ljust(45, "*")}\n'
-        # f'<pre>context.chat_data = {html.escape(str(context.chat_data))}</pre>\n'
-        # f'{"".ljust(45, "*")}\n'
-        f'context.user_data = {json.dumps(update.to_dict(), indent=4, ensure_ascii=False)}\n'
+        f'context.user_data = {ujson.dumps(context.user_data, indent=4, ensure_ascii=False)}\n'
         f'{"".ljust(45, "*")}\n'
         f'{tb_string}\n'
         f'{"".ljust(45, "*")}\n'
@@ -50,4 +48,3 @@ def error_handler(update: Update, context: CallbackContext):
     f.close()
     # Finally, send the document
     context.bot.send_document(chat_id=DEVELOPER_CHAT_ID, caption=caption, document=document)
- 

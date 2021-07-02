@@ -1,4 +1,4 @@
-from telegram import Update, InputMediaPhoto
+from telegram import Update, InputMediaPhoto, TelegramError
 from telegram.ext import CommandHandler, MessageHandler, ConversationHandler, CallbackContext, Filters, \
     CallbackQueryHandler
 
@@ -19,7 +19,7 @@ logger = logging.getLogger()
 
 
 def do_command(update: Update, context: CallbackContext):
-    # with open('jsons/update.json', 'w') as update_file:
+    # with open('jsons/update.ujson', 'w') as update_file:
     #     update_file.write(update.to_json())
     user_data = context.user_data
     user_id = update.effective_user.id
@@ -162,8 +162,14 @@ def confirmation_callback(update: Update, context: CallbackContext):
 def cancel_callback(update: Update, context: CallbackContext):
     user_data = context.user_data
 
-    context.bot.delete_message(ACTIVE_ADMINS[0], user_data['message_id'])
-
+    if MESSAGE_ID in user_data:
+        try:
+            context.bot.delete_message(update.effective_user.id, user_data['message_id'])
+        except TelegramError:
+            try:
+                context.bot.edit_message_reply_markup(update.effective_user.id, user_data['message_id'])
+            except TelegramError:
+                pass
     update.message.reply_text('Sertifikat berish bekor qilindi !\n\n'
                               'Sertifikat berishni boshlash uchun /certificate komandasini yuboring !')
 

@@ -2,3 +2,4 @@ python-telegram-bot==13.4.1
 PyMySQL==1.0.2
 Pillow==8.1.2
 requests==2.25.1
+ujson==4.0.2
